@@ -30,13 +30,13 @@ RSpec.describe "Superheros", type: :request do
       expect(hero.age).to eq 45
       expect(hero.enjoys).to eq 'margiela masks and saving the future'
 
-      error_response = JSON.parse(response.body)
+      hero_response = JSON.parse(response.body)
 
-      expect(error_response['name']).to eq 'kanye'
+      expect(hero_response['name']).to eq 'kanye'
 
-      expect(error_response['age']).to eq 45
+      expect(hero_response['age']).to eq 45
       
-      expect(error_response['enjoys']).to eq 'margiela masks and saving the future'
+      expect(hero_response['enjoys']).to eq 'margiela masks and saving the future'
     end
   end
 
