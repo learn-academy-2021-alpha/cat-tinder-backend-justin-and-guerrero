@@ -14,6 +14,30 @@ RSpec.describe "Superheros", type: :request do
       expect(first_superhero['enjoys']).to eq ('his hammer')
     end
   end
+  describe "Post /superheros" do
+    it 'creates a new hero' do
+      hero_params = {
+        hero: {
+          name: 'kanye',
+          age: 45,
+          enjoys: 'margiela masks and saving the future'
+        }
+      }
+      post '/superheros', params:hero_params
 
+      hero = Superhero.first
+      expect(hero.name).to eq 'kanye'
+      expect(hero.age).to eq 45
+      expect(hero.enjoys).to eq 'margiela masks and saving the future'
+
+      error_response = JSON.parse(response.body)
+
+      expect(error_response['name']).to eq 'kanye'
+
+      expect(error_response['age']).to eq 45
+      
+      expect(error_response['enjoys']).to eq 'margiela masks and saving the future'
+    end
+  end
 
 end
