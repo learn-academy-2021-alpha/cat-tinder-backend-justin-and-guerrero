@@ -13,7 +13,7 @@ class SuperherosController < ApplicationController
         if superhero.valid?
             render json: superhero
         else
-            render json: superhero.errors
+            render json: superhero.errors, status:400
         end
     end
     
