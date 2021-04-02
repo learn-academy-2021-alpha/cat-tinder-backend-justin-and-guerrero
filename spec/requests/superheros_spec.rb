@@ -31,13 +31,28 @@ RSpec.describe "Superheros", type: :request do
       expect(hero.enjoys).to eq 'margiela masks and saving the future'
 
       hero_response = JSON.parse(response.body)
-
       expect(hero_response['name']).to eq 'kanye'
-
       expect(hero_response['age']).to eq 45
-      
       expect(hero_response['enjoys']).to eq 'margiela masks and saving the future'
     end
   end
+  describe "PUT /superheros/:id" do
+    it 'updates a superhero' do
+      thorman = Superhero.create(name:'thor', age:3001, enjoys:'his hammer')
+      hero_params = {
+        hero: {
+          name: 'yeezy',
+          age: 3001,
+          enjoys: 'his hammer'
+        }
+      }
+      put "/superheros/#{thorman.id}", params:hero_params
+      
+      superthor_response = JSON.parse(response.body)
+      expect(response).to have_http_status(200)
+      expect(superthor_response['name']).to eq 'yeezy'
+    end
+  end
+
 
 end
