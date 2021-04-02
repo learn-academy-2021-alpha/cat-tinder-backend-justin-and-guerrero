@@ -5,7 +5,11 @@ class SuperherosController < ApplicationController
     end
     def create
         superhero = Superhero.create(hero_params)
-        render json: superhero
+        if superhero.valid?
+            render json: superhero
+        else
+            render json: superhero.errors, status:422
+        end
     end
     def update
         superhero = Superhero.find(params[:id])
@@ -13,7 +17,7 @@ class SuperherosController < ApplicationController
         if superhero.valid?
             render json: superhero
         else
-            render json: superhero.errors, status:400
+            render json: superhero.errors, status:422
         end
     end
     

@@ -35,6 +35,48 @@ RSpec.describe "Superheros", type: :request do
       expect(hero_response['age']).to eq 45
       expect(hero_response['enjoys']).to eq 'margiela masks and saving the future'
     end
+    it "can't create a hero without a name"  do
+      hero_params = { 
+        hero: {
+          age: 3001,
+          enjoys: 'his hammer'
+        }
+      }
+      post '/superheros', params:hero_params
+      
+      superthor_response = JSON.parse(response.body)
+      expect(superthor_response['name']).to include "can't be blank"
+      expect(response).to have_http_status(422)
+      
+    end
+    it "can't create a hero without an age"  do
+      hero_params = { 
+        hero: {
+          name:"lowkey",
+          enjoys: 'his hammer'
+        }
+      }
+      post '/superheros', params:hero_params
+      
+      superthor_response = JSON.parse(response.body)
+      expect(superthor_response['age']).to include "can't be blank"
+      expect(response).to have_http_status(422)
+      
+    end
+    it "can't create a hero without an enjoys"  do
+      hero_params = { 
+        hero: {
+          name:"lowkey",
+          age: 3001,
+        }
+      }
+      post '/superheros', params:hero_params
+      
+      superthor_response = JSON.parse(response.body)
+      expect(superthor_response['enjoys']).to include "can't be blank"
+      expect(response).to have_http_status(422)
+      
+    end
   end
   describe "PUT /superheros/:id" do
     it 'updates a superhero' do
@@ -55,6 +97,4 @@ RSpec.describe "Superheros", type: :request do
       expect(superthor_response['enjoys']).to eq 'his hammer'
     end
   end
-
-
 end
